@@ -1,6 +1,7 @@
 package server
 
 import (
+	use_cases "Challenge/internal/use-cases"
 	"Challenge/package/jsonApi"
 	"context"
 	"github.com/go-chi/chi"
@@ -21,11 +22,40 @@ func NewRouter() chi.Router {
 	return r
 }
 
-func JobStatus(ctx context.Context, r *http.Request) (interface{}, error) {
+type createReportRequest struct {
+	ObjectID string `json:"object_id"`
+}
 
-	return nil, nil
+type createReportResponse struct {
+	JobID string `json:"job_id"`
 }
 
 func CreateReport(ctx context.Context, r *http.Request) (interface{}, error) {
-	return nil, nil
+	var req createReportRequest
+	if err := jsonApi.UnmarshalJSONRequest(&req, r); err != nil {
+		return nil, err
+	}
+
+	reportID, err := use_cases.CreateReport(req.ObjectID)
+	if err != nil {
+		return nil, err
+	}
+
+	return createReportResponse{JobID: reportID}, nil
+}
+
+type jobStatusResponse struct {
+	JobID  string `json:"job_id"`
+	Status string `json:"status"`
+}
+
+func JobStatus(ctx context.Context, r *http.Request) (interface{}, error) {
+	jobID := chi.URLParam(r, "{job_id}")
+
+	status, err := use_cases.StatusReport(jobID)
+	if err != nil {
+		return nil, err
+	}
+
+	return jobStatusResponse{JobID: jobID, Status: status}, nil
 }
