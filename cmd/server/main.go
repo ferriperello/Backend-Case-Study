@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Challenge/internal/repos"
 	"Challenge/internal/server"
 	"context"
 	"github.com/kelseyhightower/envconfig"
@@ -24,6 +25,8 @@ func main() {
 	}
 
 	// init persistence
+	mem := repos.NewMemStore()
+	ctx = context.WithValue(ctx, "mem", mem)
 
 	// start http server service
 	r := server.NewRouter()
