@@ -1,21 +1,11 @@
 package repos
 
-import "context"
+import "Challenge/internal/entity"
 
 type Store interface {
-	GetReport
-	CreateJob
-	GetObject
-}
-
-type GetReport interface {
-	GetReport(ctx context.Context, reportID string) error
-}
-
-type CreateJob interface {
-	CreateJob(ctx context.Context, objectID string) (string, error)
-}
-
-type GetObject interface {
-	GetObject(ctx context.Context, objectID string) error
+	GetReport(reportID string) (*entity.Report, error)
+	StoreJob(job entity.Job) (string, error)
+	GetJob(jobID string) (*entity.Job, error)
+	GetObject(objectID string) (*entity.Report, error)
+	StoreReport(report entity.Report) error
 }

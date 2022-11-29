@@ -29,9 +29,9 @@ func main() {
 	ctx = context.WithValue(ctx, "mem", mem)
 
 	// start http server service
-	r := server.NewRouter()
+	r := server.NewRouter(mem)
 
-	Httpserver := &http.Server{Addr: ":8080", Handler: r}
+	Httpserver := &http.Server{Addr: ":8080", Handler: r.Rout}
 	go func() {
 		if err := Httpserver.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			// log the error

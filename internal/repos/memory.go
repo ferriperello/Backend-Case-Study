@@ -2,7 +2,6 @@ package repos
 
 import (
 	"Challenge/internal/entity"
-	"context"
 )
 
 func NewMemStore() *MemStore {
@@ -20,17 +19,27 @@ type MemStore struct {
 	reports []entity.Report
 }
 
-func (m *MemStore) GetReport(ctx context.Context, reportID string) error {
+func (m MemStore) GetReport(reportID string) (*entity.Report, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (m *MemStore) CreateJob(ctx context.Context, objectID string) (string, error) {
+func (m MemStore) StoreJob(job entity.Job) (string, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (m *MemStore) GetObject(ctx context.Context, objectID string) error {
+func (m MemStore) GetObject(objectID string) (*entity.Report, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m MemStore) StoreReport(report entity.Report) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (m MemStore) GetJob(jobID string) (*entity.Job, error) {
 	//TODO implement me
 	panic("implement me")
 }
